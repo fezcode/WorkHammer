@@ -86,46 +86,56 @@
             <Setter Property="Foreground" Value="SkyBlue"/>
         </Style>
 
-        <!-- Simplified Context Menu Styling -->
+        <!-- COMPREHENSIVE CONTEXT MENU OVERHAUL -->
         <Style Selector="MenuFlyoutPresenter">
-            <Setter Property="Background" Value="#2B2B2B"/>
-            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+            <Setter Property="Background" Value="#1F1F1F"/>
+            <Setter Property="BorderBrush" Value="#35FFFFFF"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Padding" Value="4"/>
             <Setter Property="MinWidth" Value="180"/>
         </Style>
 
         <Style Selector="MenuItem">
-            <Setter Property="CornerRadius" Value="2"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="MinWidth" Value="180"/>
-            <Setter Property="Padding" Value="0"/>
-        </Style>
-        
-        <!-- Icon sizing - BIGGER and moved right -->
-        <Style Selector="MenuItem ui|SymbolIcon">
-            <Setter Property="FontSize" Value="26"/>
-            <Setter Property="Width" Value="30"/>
-            <Setter Property="Margin" Value="20,0,15,0"/>
-        </Style>
-
-        <!-- Standard Single Hover Effect on the ContentPresenter -->
-        <Style Selector="MenuItem /template/ ContentPresenter#PART_HeaderPresenter">
-            <Setter Property="Padding" Value="12,8"/>
             <Setter Property="Background" Value="Transparent"/>
-        </Style>
-        
-        <Style Selector="MenuItem:pointerover /template/ ContentPresenter#PART_HeaderPresenter">
-            <Setter Property="Background" Value="#25FFFFFF"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#E0FFFFFF"/>
         </Style>
 
-        <!-- Danger MenuItem Style -->
-        <Style Selector="MenuItem.danger">
-            <Setter Property="Foreground" Value="#FF4D4D"/>
+        <!-- The core template parts for a clean highlight -->
+        <Style Selector="MenuItem /template/ Panel#PART_LayoutRoot">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="2,1"/>
         </Style>
-        <Style Selector="MenuItem.danger:pointerover /template/ ContentPresenter#PART_HeaderPresenter">
-            <Setter Property="Background" Value="#25FF4D4D"/>
+
+        <Style Selector="MenuItem:pointerover /template/ Panel#PART_LayoutRoot">
+            <Setter Property="Background" Value="#15FFFFFF"/>
+        </Style>
+
+        <!-- ContentPresenter must be transparent to show the highlight from LayoutRoot -->
+        <Style Selector="MenuItem /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="12,8"/>
+        </Style>
+        
+        <!-- Icon styling - Precise alignment and sizing -->
+        <Style Selector="MenuItem ui|SymbolIcon">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Margin" Value="4,0,12,0"/>
+            <Setter Property="Foreground" Value="#B0FFFFFF"/>
+        </Style>
+
+        <!-- Danger Theme for Delete -->
+        <Style Selector="MenuItem.danger">
+            <Setter Property="Foreground" Value="#FF5F5F"/>
+        </Style>
+        <Style Selector="MenuItem.danger ui|SymbolIcon">
+            <Setter Property="Foreground" Value="#FF5F5F"/>
+        </Style>
+        <Style Selector="MenuItem.danger:pointerover /template/ Panel#PART_LayoutRoot">
+            <Setter Property="Background" Value="#30FF4D4D"/>
         </Style>
 
         <!-- Typography -->
