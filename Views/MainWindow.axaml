@@ -6,6 +6,7 @@
         xmlns:ui="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
         xmlns:conv="using:WorkHammer.Views.Converters"
         xmlns:models="using:WorkHammer.Models"
+        xmlns:ctrl="using:WorkHammer.Views.Controls"
         mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="600"
         x:Class="WorkHammer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -166,304 +167,20 @@
             </Grid.ColumnDefinitions>
             
             <!-- SIDEBAR -->
-            <Border Grid.Column="0" Background="#15000000" BorderBrush="#30FFFFFF" BorderThickness="0,0,1,0">
-                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*">
-                    
-                    <!-- Sidebar Actions -->
-                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="16,15,16,10">
-                        <TextBlock Text="APPLICATIONS" Classes="section-header" VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
-                            <Button Command="{Binding AddJobCommand}" Classes="toolbar" ToolTip.Tip="New Application">
-                                <PathIcon Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Width="16" Height="16" Foreground="#888888"/>
-                            </Button>
-                            
-                            <!-- Sort Button -->
-                            <Button Classes="toolbar" ToolTip.Tip="Sort Applications">
-                                <Button.Flyout>
-                                    <MenuFlyout>
-                                        <MenuItem Header="Sort by Name" Command="{Binding SetSortCommand}" CommandParameter="{x:Static vm:JobSortOption.Name}">
-                                            <MenuItem.Icon>
-                                                <PathIcon Data="{Binding SortDirectionIcon}" Width="10" Height="10" Foreground="SkyBlue" IsVisible="{Binding IsNameSortActive}"/>
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Header="Sort by Status" Command="{Binding SetSortCommand}" CommandParameter="{x:Static vm:JobSortOption.Status}">
-                                            <MenuItem.Icon>
-                                                <PathIcon Data="{Binding SortDirectionIcon}" Width="10" Height="10" Foreground="SkyBlue" IsVisible="{Binding IsStatusSortActive}"/>
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Header="Sort by Date Applied" Command="{Binding SetSortCommand}" CommandParameter="{x:Static vm:JobSortOption.DateApplied}">
-                                            <MenuItem.Icon>
-                                                <PathIcon Data="{Binding SortDirectionIcon}" Width="10" Height="10" Foreground="SkyBlue" IsVisible="{Binding IsDateSortActive}"/>
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Header="Sort by Last Update" Command="{Binding SetSortCommand}" CommandParameter="{x:Static vm:JobSortOption.LastUpdate}">
-                                            <MenuItem.Icon>
-                                                <PathIcon Data="{Binding SortDirectionIcon}" Width="10" Height="10" Foreground="SkyBlue" IsVisible="{Binding IsUpdateSortActive}"/>
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Header="Sort by Creation Date" Command="{Binding SetSortCommand}" CommandParameter="{x:Static vm:JobSortOption.CreatedDate}">
-                                            <MenuItem.Icon>
-                                                <PathIcon Data="{Binding SortDirectionIcon}" Width="10" Height="10" Foreground="SkyBlue" IsVisible="{Binding IsCreatedSortActive}"/>
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                    </MenuFlyout>
-                                </Button.Flyout>
-                                <PathIcon Data="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z" Width="14" Height="14" Foreground="#888888"/>
-                            </Button>
-
-                            <Button Command="{Binding OpenExplorerCommand}" Classes="toolbar" ToolTip.Tip="Reveal in File Explorer">
-                                <PathIcon Data="M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0-5a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z" Width="14" Height="14" Foreground="#888888"/>
-                            </Button>
-                            <Button Click="OnSelectFolderClicked" Classes="toolbar" ToolTip.Tip="Change Working Folder">
-                                <PathIcon Data="M20 18H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h6l2 2h8c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2zM4 6v10h16V8h-8.41l-2-2H4z" Width="14" Height="14" Foreground="#888888"/>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
-                    
-                     <TextBlock Grid.Row="1" Text="{Binding CurrentDataPath, Converter={StaticResource PathTruncateConverter}, ConverterParameter=30}" 
-                               FontSize="10" Foreground="#AAAAAA" Margin="16,0,16,12" Background="Transparent"
-                               ToolTip.Tip="{Binding CurrentDataPath}" ToolTip.Placement="Bottom" ToolTip.VerticalOffset="5" ToolTip.ShowDelay="500"
-                               IsVisible="{Binding CurrentDataPath, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-
-                    <Border Grid.Row="2" Height="1" Background="#20FFFFFF" Margin="0,0,0,12"/>
-
-                    <!-- Search & Filter -->
-                    <Grid Grid.Row="3" Margin="16,0,16,15" RowDefinitions="Auto,Auto">
-                        <TextBox Grid.Row="0" Text="{Binding SearchText}" Watermark="Search..." Height="32" Padding="8,4" FontSize="12" Margin="0,0,0,8" Foreground="White"/>
-                        <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
-                            <ComboBox Grid.Column="0" ItemsSource="{Binding JobStatuses}" SelectedItem="{Binding StatusFilter}" PlaceholderText="Filter by Status"
-                                      HorizontalAlignment="Stretch" Height="32" Padding="8,8" FontSize="11">
-                                      <ComboBox.ItemTemplate>
-                                        <DataTemplate><TextBlock Text="{Binding}" FontSize="11" Foreground="White"/></DataTemplate>
-                                      </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button Grid.Column="1" Classes="toolbar" Margin="6,0,0,0" Command="{Binding ClearFilterCommand}" IsVisible="{Binding StatusFilter, Converter={x:Static ObjectConverters.IsNotNull}}" ToolTip.Tip="Clear Filter">
-                                <PathIcon Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Width="12" Height="12" Foreground="White"/>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                    
-                    <Border Grid.Row="4" Height="1" Background="#20FFFFFF" Margin="0,0,0,5"/>
-
-                    <ListBox Grid.Row="5" ItemsSource="{Binding Jobs}" SelectedItem="{Binding SelectedJob}" Background="Transparent" BorderThickness="0" Margin="0">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="Transparent" HorizontalAlignment="Stretch" Padding="12,10">
-                                    <Border.ContextFlyout>
-                                        <MenuFlyout>
-                                            <MenuItem Header="Edit" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).EditCurrentCommand}"><MenuItem.Icon><ui:SymbolIcon Symbol="Edit" x:CompileBindings="False"/></MenuItem.Icon></MenuItem>
-                                            <Separator/>
-                                            <MenuItem Header="Delete" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteJobCommand}" Foreground="#ff4d4d"><MenuItem.Icon><ui:SymbolIcon Symbol="Delete" Foreground="#ff4d4d" x:CompileBindings="False"/></MenuItem.Icon></MenuItem>
-                                        </MenuFlyout>
-                                    </Border.ContextFlyout>
-                                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" Background="Transparent">
-                                        <!-- Status Indicator -->
-                                        <PathIcon Grid.RowSpan="2" Grid.Column="0" 
-                                                  Data="{Binding Status, Converter={StaticResource StatusPathConverter}}" 
-                                                  Width="14" Height="14" Margin="0,0,12,0" VerticalAlignment="Center"
-                                                  Foreground="{Binding Status, Converter={StaticResource StatusColorConverter}}"/>
-
-                                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Company}" FontSize="13" Foreground="White" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Role}" FontSize="11" Foreground="#CCCCCC" TextTrimming="CharacterEllipsis"/>
-                                        <Ellipse Grid.Row="1" Grid.Column="1" Width="6" Height="6" Fill="Orange" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" IsVisible="{Binding IsDirty}"/>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Grid>
-            </Border>
+            <ctrl:SidebarView Grid.Column="0" DataContext="{Binding}"/>
 
             <GridSplitter Grid.Column="1" Width="4" Background="Transparent" ResizeBehavior="PreviousAndNext"/>
 
             <!-- MAIN CONTENT -->
             <Panel Grid.Column="2">
                 <Border Background="#20000000" IsHitTestVisible="False"/>
-                <Grid IsVisible="{Binding SelectedJob, Converter={x:Static ObjectConverters.IsNotNull}}" RowDefinitions="Auto,*" Margin="40,30,40,40">
-                    <!-- MODE 1: READ ONLY VIEW -->
-                    <Grid Grid.RowSpan="2" RowDefinitions="Auto,*" IsVisible="{Binding !IsEditing}">
-                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,40">
-                            <StackPanel Spacing="6">
-                                <TextBlock Text="{Binding SelectedJob.Company}" FontSize="36" FontWeight="SemiLight" Foreground="White"/>
-                                <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <TextBlock Text="{Binding SelectedJob.Role}" FontSize="20" Foreground="#CCCCCC"/>
-                                    <Border Background="{Binding SelectedJob.Status, Converter={StaticResource StatusColorConverter}}" CornerRadius="14" Padding="12,4" VerticalAlignment="Center">
-                                        <StackPanel Orientation="Horizontal" Spacing="8">
-                                            <ui:SymbolIcon Symbol="{Binding SelectedJob.Status, Converter={StaticResource StatusIconConverter}}" FontSize="14" Foreground="White" x:CompileBindings="False"/><TextBlock Text="{Binding SelectedJob.Status}" FontSize="12" Foreground="White" FontWeight="SemiBold"/>
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>
-                            </StackPanel>
-                            <Button Grid.Column="1" Command="{Binding EditCurrentCommand}" Classes="accent" VerticalAlignment="Top">
-                                <StackPanel Orientation="Horizontal" Spacing="8"><ui:SymbolIcon Symbol="Edit" FontSize="16" x:CompileBindings="False" Foreground="Black"/><TextBlock Text="Edit Application" Foreground="Black"/></StackPanel>
-                            </Button>
-                        </Grid>
-                        <ScrollViewer Grid.Row="1">
-                            <StackPanel Spacing="40">
-                                <Grid ColumnDefinitions="*,*,*,*">
-                                    <StackPanel Grid.Column="0" Spacing="8"><TextBlock Text="DATE APPLIED" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.AppliedDate, StringFormat='{}{0:D}'}" FontSize="16"/></StackPanel>
-                                    <StackPanel Grid.Column="1" Spacing="8"><TextBlock Text="DATE CREATED" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.CreatedDate, StringFormat='{}{0:D}'}" FontSize="16"/></StackPanel>
-                                    <StackPanel Grid.Column="2" Spacing="8"><TextBlock Text="LAST UPDATED" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.UpdatedDate, FallbackValue='Never'}" FontSize="16" Opacity="0.6"/></StackPanel>
-                                    <StackPanel Grid.Column="3" Spacing="8"><TextBlock Text="JOB LINK" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.Link, FallbackValue='No Link'}" FontSize="16" Foreground="{DynamicResource SystemControlBackgroundAccentBrush}"/></StackPanel>
-                                </Grid>
-                                                                                                <StackPanel Spacing="12"><TextBlock Text="DESCRIPTION" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.Description}" FontSize="14" TextWrapping="Wrap" LineHeight="22" Opacity="0.9"/></StackPanel>
-                                                                                                <StackPanel Spacing="12"><TextBlock Text="TECH STACK" Classes="section-header"/><ItemsControl ItemsSource="{Binding SelectedJob.TechStack}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><Border Classes="tech-badge"><TextBlock Text="{Binding}" FontSize="12"/></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel>
-                                                                                                
-                                                                                                <StackPanel Spacing="12">
-                                                                                                    <TextBlock Text="STAGES" Classes="section-header"/>
-                                                                                                    <ItemsControl ItemsSource="{Binding SelectedJob.Stages}">
-                                                                                                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="8"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-                                                                                                        <ItemsControl.ItemTemplate>
-                                                                                                            <DataTemplate>
-                                                                                                                <Border Background="#10FFFFFF" CornerRadius="4" Padding="12,8">
-                                                                                                                    <TextBlock Text="{Binding}" FontSize="13"/>
-                                                                                                                </Border>
-                                                                                                            </DataTemplate>
-                                                                                                        </ItemsControl.ItemTemplate>
-                                                                                                    </ItemsControl>
-                                                                                                </StackPanel>
-                                                                
-                                                                                                <StackPanel Spacing="12">
-                                                                                                    <TextBlock Text="APPLICATION RESULT" Classes="section-header"/>
-                                                                                                    <Border Background="#15FFFFFF" BorderBrush="#30FFFFFF" BorderThickness="1" CornerRadius="8" Padding="20">
-                                                                                                        <StackPanel Spacing="10">
-                                                                                                            <Grid ColumnDefinitions="Auto, *">
-                                                                                                                <TextBlock Text="Stage reached:" FontSize="12" Opacity="0.6" Margin="0,0,10,0"/>
-                                                                                                                <TextBlock Grid.Column="1" Text="{Binding SelectedJob.Result.Stage, FallbackValue='N/A'}" FontWeight="SemiBold"/>
-                                                                                                            </Grid>
-                                                                                                            <TextBlock Text="Reason / Feedback:" FontSize="12" Opacity="0.6"/>
-                                                                                                            <TextBlock Text="{Binding SelectedJob.Result.Reason, FallbackValue='No feedback provided'}" TextWrapping="Wrap" Opacity="0.9"/>
-                                                                                                        </StackPanel>
-                                                                                                    </Border>
-                                                                                                </StackPanel>
-                                                                
-                                                                                                <StackPanel Spacing="12">
-                                                                                                    <TextBlock Text="APPLICATION LOGS" Classes="section-header"/>
-                                                                                                    <ItemsControl ItemsSource="{Binding SelectedJob.Logs}">
-                                                                                                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="10"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-                                                                                                        <ItemsControl.ItemTemplate>
-                                                                                                            <DataTemplate>
-                                                                                                                <Border Background="#08FFFFFF" BorderBrush="#15FFFFFF" BorderThickness="1" CornerRadius="6" Padding="12">
-                                                                                                                    <Grid ColumnDefinitions="Auto, *, Auto">
-                                                                                                                        <TextBlock Text="{Binding Date, StringFormat='{}{0:d}'}" FontSize="11" Opacity="0.5" VerticalAlignment="Top"/>
-                                                                                                                        <StackPanel Grid.Column="1" Margin="15,0,0,0">
-                                                                                                                            <TextBlock Text="{Binding Stage}" IsVisible="{Binding Stage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
-                                                                                                                                       FontSize="12" FontWeight="Bold" Foreground="SkyBlue" Margin="0,0,0,4"/>
-                                                                                                                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap" FontSize="13" Opacity="0.9"/>
-                                                                                                                        </StackPanel>
-                                                                                                                    </Grid>
-                                                                                                                </Border>
-                                                                                                            </DataTemplate>
-                                                                                                        </ItemsControl.ItemTemplate>
-                                                                                                    </ItemsControl>
-                                                                                                    <TextBlock Text="No logs recorded yet." IsVisible="{Binding !SelectedJob.Logs.Count}" Opacity="0.3" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
-                                                                                                </StackPanel>                                <StackPanel Spacing="12"><TextBlock Text="PERSONAL NOTES" Classes="section-header"/><Border Background="#10FFFFFF" CornerRadius="8" Padding="20"><TextBlock Text="{Binding SelectedJob.Notes}" FontSize="14" TextWrapping="Wrap" Opacity="0.8" FontStyle="Italic"/></Border></StackPanel>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
-                    <!-- MODE 2: EDITING MODE -->
-                    <Grid Grid.RowSpan="2" RowDefinitions="Auto,*" IsVisible="{Binding IsEditing}">
-                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,40">
-                            <StackPanel Spacing="6"><StackPanel Orientation="Horizontal" Spacing="8"><TextBlock Text="Editing Application" FontSize="24" FontWeight="SemiBold" Foreground="White"/><TextBlock Text="*" FontSize="24" Foreground="{DynamicResource SystemControlBackgroundAccentBrush}" IsVisible="{Binding SelectedJob.IsDirty}" VerticalAlignment="Top"/><Border Background="{Binding SelectedJob.Status, Converter={StaticResource StatusColorConverter}}" CornerRadius="12" Padding="10,2" VerticalAlignment="Center" Margin="10,0,0,0"><StackPanel Orientation="Horizontal" Spacing="6"><ui:SymbolIcon Symbol="{Binding SelectedJob.Status, Converter={StaticResource StatusIconConverter}}" FontSize="12" Foreground="White" x:CompileBindings="False"/><TextBlock Text="{Binding SelectedJob.Status}" FontSize="10" Foreground="White" FontWeight="Bold"/></StackPanel></Border></StackPanel><TextBlock Text="{Binding SelectedJob.Company}" FontSize="14" Foreground="#AAAAAA"/></StackPanel>
-                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12" VerticalAlignment="Top"><Button Command="{Binding SaveJobCommand}" Classes="accent" Content="Save Changes" Padding="20,8" /><Button Command="{Binding CancelEditCommand}" Content="Cancel" Padding="20,8" /></StackPanel>
-                        </Grid>
-                        <ScrollViewer Grid.Row="1" Padding="0,0,20,0">
-                            <StackPanel Spacing="32">
-                                <Grid ColumnDefinitions="*,30,*" RowDefinitions="Auto,Auto,Auto"><StackPanel Grid.Row="0" Grid.Column="0"><TextBlock Text="Company Name" Classes="section-header" Margin="0,0,0,10"/><TextBox Text="{Binding SelectedJob.Company}" Height="36" Foreground="White"/></StackPanel><StackPanel Grid.Row="0" Grid.Column="2"><TextBlock Text="Position Role" Classes="section-header" Margin="0,0,0,10"/><TextBox Text="{Binding SelectedJob.Role}" Height="36" Foreground="White"/></StackPanel><StackPanel Grid.Row="1" Grid.Column="0" Margin="0,25,0,0"><TextBlock Text="Status" Classes="section-header" Margin="0,0,0,10"/><ComboBox ItemsSource="{Binding JobStatuses}" SelectedItem="{Binding SelectedJob.Status}" HorizontalAlignment="Stretch" Height="36"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" Foreground="White"/></DataTemplate></ComboBox.ItemTemplate></ComboBox></StackPanel><StackPanel Grid.Row="1" Grid.Column="2" Margin="0,25,0,0"><TextBlock Text="Date Applied" Classes="section-header" Margin="0,0,0,10"/><CalendarDatePicker SelectedDate="{Binding SelectedJob.AppliedDate}" HorizontalAlignment="Stretch" Height="36" Foreground="White"/></StackPanel></Grid>
-                                
-                                <StackPanel><TextBlock Text="Job Link" Classes="section-header" Margin="0,0,0,10"/><TextBox Text="{Binding SelectedJob.Link}" Watermark="https://..." Height="36" Foreground="White"/></StackPanel>
-                                <StackPanel><TextBlock Text="Description" Classes="section-header" Margin="0,0,0,10"/><TextBox Text="{Binding SelectedJob.Description}" MinHeight="150" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" FontFamily="Consolas, Monospace" Padding="12" Foreground="White"/></StackPanel>
-
-                                <StackPanel Spacing="12"><TextBlock Text="TECH STACK" Classes="section-header"/><ItemsControl ItemsSource="{Binding SelectedJob.TechStack}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><Border Classes="tech-badge"><StackPanel Orientation="Horizontal" Spacing="8"><TextBlock Text="{Binding}" FontSize="12" VerticalAlignment="Center"/><Button Classes="toolbar" Padding="2" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveTechTagCommand}" CommandParameter="{Binding}"><PathIcon Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Width="8" Height="8" Foreground="White"/></Button></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl><Grid ColumnDefinitions="*,Auto"><TextBox Text="{Binding NewTechTag}" Watermark="Add technology..." Height="36"><TextBox.KeyBindings><KeyBinding Gesture="Enter" Command="{Binding AddTechTagCommand}"/></TextBox.KeyBindings></TextBox><Button Grid.Column="1" Command="{Binding AddTechTagCommand}" Classes="accent" Content="Add" Height="36" Margin="8,0,0,0"/></Grid></StackPanel>
-                                
-                                <StackPanel Spacing="12">
-                                    <TextBlock Text="STAGES" Classes="section-header"/>
-                                    <ItemsControl ItemsSource="{Binding SelectedJob.Stages}">
-                                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="4"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Background="#10FFFFFF" CornerRadius="4" Padding="10,6">
-                                                    <Grid ColumnDefinitions="*, Auto">
-                                                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
-                                                        <Button Grid.Column="1" Classes="toolbar" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveStageCommand}" CommandParameter="{Binding}">
-                                                            <ui:SymbolIcon Symbol="Dismiss" FontSize="16"/>
-                                                        </Button>
-                                                    </Grid>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <TextBox Text="{Binding NewStageName}" Watermark="e.g. Technical Interview" Height="36">
-                                            <TextBox.KeyBindings><KeyBinding Gesture="Enter" Command="{Binding AddStageCommand}"/></TextBox.KeyBindings>
-                                        </TextBox>
-                                        <Button Grid.Column="1" Command="{Binding AddStageCommand}" Classes="accent" Content="Add Stage" Height="36" Margin="8,0,0,0"/>
-                                    </Grid>
-                                </StackPanel>
-
-                                <StackPanel Spacing="12">
-                                    <TextBlock Text="APPLICATION RESULT" Classes="section-header"/>
-                                    <Grid ColumnDefinitions="*, 20, *">
-                                        <StackPanel Grid.Column="0">
-                                            <TextBlock Text="Final Stage Reached" FontSize="11" Opacity="0.6" Margin="0,0,0,8"/>
-                                            <TextBox Text="{Binding SelectedJob.Result.Stage}" Height="36" Watermark="e.g. 3rd Stage"/>
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="2">
-                                            <TextBlock Text="Reason / Feedback" FontSize="11" Opacity="0.6" Margin="0,0,0,8"/>
-                                            <TextBox Text="{Binding SelectedJob.Result.Reason}" Height="36" Watermark="e.g. Culture fit..."/>
-                                        </StackPanel>
-                                    </Grid>
-                                </StackPanel>
-                                <StackPanel Spacing="12">
-                                    <TextBlock Text="APPLICATION LOGS" Classes="section-header"/>
-                                    <ItemsControl ItemsSource="{Binding SelectedJob.Logs}">
-                                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="8"/></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Background="#10FFFFFF" CornerRadius="6" Padding="10">
-                                                    <Grid ColumnDefinitions="Auto, *, Auto">
-                                                        <TextBlock Text="{Binding Date, StringFormat='{}{0:d}'}" FontSize="10" Opacity="0.5" VerticalAlignment="Center"/>
-                                                        <StackPanel Grid.Column="1" Margin="15,0">
-                                                            <TextBlock Text="{Binding Stage}" FontWeight="Bold" FontSize="11" Foreground="SkyBlue" IsVisible="{Binding Stage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
-                                                            <TextBlock Text="{Binding Text}" FontSize="12" TextWrapping="Wrap"/>
-                                                        </StackPanel>
-                                                        <Button Grid.Column="2" Classes="toolbar" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).RemoveLogCommand}" CommandParameter="{Binding}">
-                                                            <ui:SymbolIcon Symbol="Delete" FontSize="14" Foreground="#ff4d4d"/>
-                                                        </Button>
-                                                    </Grid>
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                    <Border Background="#05FFFFFF" BorderBrush="#20FFFFFF" BorderThickness="1" CornerRadius="8" Padding="15">
-                                        <StackPanel Spacing="10">
-                                            <Grid ColumnDefinitions="*, 10, *">
-                                                <StackPanel Grid.Column="0">
-                                                    <TextBlock Text="Stage" FontSize="11" Opacity="0.6" Margin="0,0,0,5"/>
-                                                    <TextBox Text="{Binding NewLogStage}" Height="32" Watermark="e.g. Interview 1"/>
-                                                </StackPanel>
-                                                <StackPanel Grid.Column="2">
-                                                    <TextBlock Text="Date" FontSize="11" Opacity="0.6" Margin="0,0,0,5"/>
-                                                    <TextBlock Text="Automatically added" FontSize="11" VerticalAlignment="Center" Height="32" Padding="0,8"/>
-                                                </StackPanel>
-                                            </Grid>
-                                            <StackPanel>
-                                                <TextBlock Text="Log Entry" FontSize="11" Opacity="0.6" Margin="0,0,0,5"/>
-                                                <TextBox Text="{Binding NewLogText}" Watermark="What happened?" Height="32">
-                                                    <TextBox.KeyBindings><KeyBinding Gesture="Enter" Command="{Binding AddLogCommand}"/></TextBox.KeyBindings>
-                                                </TextBox>
-                                            </StackPanel>
-                                            <Button Command="{Binding AddLogCommand}" Content="Add Log Entry" Classes="accent" HorizontalAlignment="Right"/>
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>
-
-                                <StackPanel><TextBlock Text="Personal Notes" Classes="section-header" Margin="0,0,0,10"/><TextBox Text="{Binding SelectedJob.Notes}" MinHeight="120" AcceptsReturn="True" TextWrapping="Wrap" VerticalContentAlignment="Top" Padding="12" Foreground="White"/></StackPanel>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
+                
+                <Grid IsVisible="{Binding SelectedJob, Converter={x:Static ObjectConverters.IsNotNull}}" Margin="40,30,40,40">
+                    <ctrl:JobDetailView IsVisible="{Binding !IsEditing}" DataContext="{Binding}"/>
+                    <ctrl:JobEditView IsVisible="{Binding IsEditing}" DataContext="{Binding}"/>
                 </Grid>
 
+                <!-- Empty State -->
                 <Grid IsVisible="{Binding SelectedJob, Converter={x:Static ObjectConverters.IsNull}}" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Spacing="20" HorizontalAlignment="Center">
                         <PathIcon Data="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" Width="64" Height="64" Foreground="#40FFFFFF"/>
@@ -475,75 +192,11 @@
                 </Grid>
 
                 <!-- Settings Overlay -->
-                <Border IsVisible="{Binding IsSettingsOpen}" Background="#E0000000" ZIndex="10">
-                    <Grid RowDefinitions="Auto, *">
-                        <Grid Grid.Row="0" Margin="40,40,40,20" ColumnDefinitions="*, Auto">
-                            <TextBlock Text="SETTINGS" Classes="section-header" FontSize="24" Opacity="1"/>
-                            <Button Grid.Column="1" Command="{Binding ToggleSettingsCommand}" Classes="toolbar">
-                                <ui:SymbolIcon Symbol="Dismiss" FontSize="24"/>
-                            </Button>
-                        </Grid>
-                        <ScrollViewer Grid.Row="1" Margin="40,0,40,40">
-                            <StackPanel Spacing="30">
-                                <StackPanel Spacing="10">
-                                    <TextBlock Text="APPEARANCE" Classes="section-header"/>
-                                    <Border Background="#10FFFFFF" CornerRadius="8" Padding="20">
-                                        <Grid ColumnDefinitions="*, Auto">
-                                            <StackPanel Spacing="4">
-                                                <TextBlock Text="Transparency Effects" FontSize="16"/>
-                                                <TextBlock Text="Enable Mica and Acrylic blur effects (requires OS support)" FontSize="12" Opacity="0.6"/>
-                                            </StackPanel>
-                                            <ToggleSwitch Grid.Column="1" IsChecked="{Binding IsTransparencyEnabled}" OnContent="" OffContent=""/>
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
-
-                                <StackPanel Spacing="10">
-                                    <TextBlock Text="DATA LOCATION" Classes="section-header"/>
-                                    <Border Background="#10FFFFFF" CornerRadius="8" Padding="20">
-                                        <StackPanel Spacing="12">
-                                            <StackPanel Spacing="4">
-                                                <TextBlock Text="Current Folder (this session):" FontSize="11" Opacity="0.6"/>
-                                                <TextBlock Text="{Binding CurrentDataPath}" FontSize="14" TextWrapping="Wrap" Foreground="SkyBlue"/>
-                                            </StackPanel>
-                                            
-                                            <Border Height="1" Background="#20FFFFFF" Margin="0,4"/>
-
-                                            <StackPanel Spacing="4">
-                                                <TextBlock Text="Default Folder (on startup):" FontSize="11" Opacity="0.6"/>
-                                                <TextBlock Text="{Binding DefaultDataPath}" FontSize="13" TextWrapping="Wrap" Opacity="0.8"/>
-                                            </StackPanel>
-
-                                            <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,8,0,0">
-                                                <Button Click="OnSelectFolderClicked" Content="Select Folder"/>
-                                                <Button Command="{Binding SetAsDefaultDirectoryCommand}" Content="Set as Default" Classes="accent"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Border>
-                                </StackPanel>
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
-                </Border>
+                <ctrl:SettingsOverlayView DataContext="{Binding}"/>
             </Panel>
         </Grid>
 
         <!-- Status Bar -->
-        <Border Grid.Row="2" Height="32" Background="#15000000" BorderBrush="#30FFFFFF" BorderThickness="0,1,0,0" Padding="16,0">
-            <Grid ColumnDefinitions="*,Auto">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Spacing="8">
-                    <PathIcon Data="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 1,1 4,12A8,8 0 0,1 12,4M12,10A2,2 0 1,0 14,12A2,2 0 0,0 12,10Z" Width="14" Height="14" Foreground="#AAAAAA"/><Border Classes="stat-badge" Background="#AAAAAA"><TextBlock Text="{Binding TotalCount, StringFormat='TOTAL: {0}'}"/></Border>
-                    <Border Classes="stat-badge" Background="{Binding Source={x:Static models:JobStatus.Applied}, Converter={StaticResource StatusColorConverter}}"><TextBlock Text="{Binding AppliedCount, StringFormat='APPLIED: {0}'}"/></Border>
-                    <Border Classes="stat-badge" Background="{Binding Source={x:Static models:JobStatus.Interviewing}, Converter={StaticResource StatusColorConverter}}"><TextBlock Text="{Binding InterviewingCount, StringFormat='INTERVIEWING: {0}'}"/></Border><Border Classes="stat-badge" Background="{Binding Source={x:Static models:JobStatus.Offer}, Converter={StaticResource StatusColorConverter}}"><TextBlock Text="{Binding OffersCount, StringFormat='OFFERS: {0}'}"/></Border><Border Classes="stat-badge" Background="{Binding Source={x:Static models:JobStatus.Rejected}, Converter={StaticResource StatusColorConverter}}"><TextBlock Text="{Binding RejectedCount, StringFormat='REJECTED: {0}'}"/></Border><Border Classes="stat-badge" Background="{Binding Source={x:Static models:JobStatus.Ghosted}, Converter={StaticResource StatusColorConverter}}"><TextBlock Text="{Binding GhostedCount, StringFormat='GHOSTED: {0}'}"/></Border>
-                </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Spacing="12">
-                    <Button Command="{Binding ToggleSettingsCommand}" Classes="toolbar" ToolTip.Tip="Settings">
-                        <ui:SymbolIcon Symbol="Settings" FontSize="14" Foreground="#80FFFFFF"/>
-                    </Button>
-                    <Button Command="{Binding ShowAboutCommand}" Classes="toolbar" ToolTip.Tip="About WorkHammer"><PathIcon Data="M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 1,1 4,12A8,8 0 0,1 12,4M12,6A2,2 0 1,0 14,8A2,2 0 0,0 12,6M15,18H9V16H11V10H9V8H13V16H15Z" Width="14" Height="14" Foreground="#80FFFFFF"/></Button>
-                    <TextBlock Text="Ready" FontSize="11" Foreground="#80FFFFFF" VerticalAlignment="Center"/><PathIcon Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" Width="14" Height="14" Foreground="#80FFFFFF"/>
-                </StackPanel>
-            </Grid>
-        </Border>
+        <ctrl:StatusBarView Grid.Row="2" DataContext="{Binding}"/>
     </Grid>
 </Window>

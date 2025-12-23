@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:WorkHammer.ViewModels"
+             xmlns:ui="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
+             x:Class="WorkHammer.Views.Controls.SettingsOverlayView"
+             x:DataType="vm:MainWindowViewModel">
+    
+    <Border IsVisible="{Binding IsSettingsOpen}" Background="#E0000000" ZIndex="10">
+        <Grid RowDefinitions="Auto, *">
+            <Grid Grid.Row="0" Margin="40,40,40,20" ColumnDefinitions="*, Auto">
+                <TextBlock Text="SETTINGS" Classes="section-header" FontSize="24" Opacity="1"/>
+                <Button Grid.Column="1" Command="{Binding ToggleSettingsCommand}" Classes="toolbar">
+                    <ui:SymbolIcon Symbol="Dismiss" FontSize="24"/>
+                </Button>
+            </Grid>
+            <ScrollViewer Grid.Row="1" Margin="40,0,40,40">
+                <StackPanel Spacing="30">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="APPEARANCE" Classes="section-header"/>
+                        <Border Background="#10FFFFFF" CornerRadius="8" Padding="20">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Transparency Effects" FontSize="16"/>
+                                    <TextBlock Text="Enable Mica and Acrylic blur effects (requires OS support)" FontSize="12" Opacity="0.6"/>
+                                </StackPanel>
+                                <ToggleSwitch Grid.Column="1" IsChecked="{Binding IsTransparencyEnabled}" OnContent="" OffContent=""/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="DATA LOCATION" Classes="section-header"/>
+                        <Border Background="#10FFFFFF" CornerRadius="8" Padding="20">
+                            <StackPanel Spacing="12">
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Current Folder (this session):" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Text="{Binding CurrentDataPath}" FontSize="14" TextWrapping="Wrap" Foreground="SkyBlue"/>
+                                </StackPanel>
+                                
+                                <Border Height="1" Background="#20FFFFFF" Margin="0,4"/>
+
+                                <StackPanel Spacing="4">
+                                    <TextBlock Text="Default Folder (on startup):" FontSize="11" Opacity="0.6"/>
+                                    <TextBlock Text="{Binding DefaultDataPath}" FontSize="13" TextWrapping="Wrap" Opacity="0.8"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,8,0,0">
+                                    <Button Click="OnSelectFolderClicked" Content="Select Folder"/>
+                                    <Button Command="{Binding SetAsDefaultDirectoryCommand}" Content="Set as Default" Classes="accent"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

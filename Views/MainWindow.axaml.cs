@@ -19,7 +19,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         
-        // Wire up the confirmation dialogs when DataContext is set
         DataContextChanged += (s, e) =>
         {
             if (DataContext is MainWindowViewModel vm)
@@ -60,7 +59,6 @@ public partial class MainWindow : Window
         {
             e.Cancel = true;
 
-            // Save window size if not maximized
             if (WindowState == WindowState.Normal)
             {
                 await vm.SaveWindowSizeAsync(Bounds.Width, Bounds.Height);
@@ -89,9 +87,9 @@ public partial class MainWindow : Window
                 {
                     new TextBlock { Text = "WorkHammer v1.0", FontWeight = Avalonia.Media.FontWeight.Bold, FontSize = 18 },
                     new TextBlock { Text = "A professional job application tracker for developers.", TextWrapping = Avalonia.Media.TextWrapping.Wrap },
-                    new TextBlock { Text = "Author: Fezcode (samil bulbul)", Opacity = 0.8 },
+                    new TextBlock { Text = "Author: Fezcode (A. Şamil Bülbül)", Opacity = 0.8 },
                     new Button 
-                    { 
+                    {
                         Content = "Homepage: https://fezcode.com", 
                         Foreground = Avalonia.Media.Brushes.SkyBlue,
                         BorderThickness = new Avalonia.Thickness(0),
@@ -140,14 +138,10 @@ public partial class MainWindow : Window
             DefaultButton = ContentDialogButton.Close
         };
 
-        // Style the primary button as danger
         dialog.Opened += (s, e) =>
         {
             var btn = dialog.FindControl<Button>("PrimaryButton");
-            if (btn != null)
-            {
-                btn.Classes.Add("danger");
-            }
+            if (btn != null) btn.Classes.Add("danger");
         };
 
         var result = await dialog.ShowAsync();
@@ -174,25 +168,5 @@ public partial class MainWindow : Window
             ContentDialogResult.Secondary => ConfirmationResult.No,
             _ => ConfirmationResult.Cancel
         };
-    }
-
-    private async void OnSelectFolderClicked(object? sender, RoutedEventArgs e)
-    {
-        var storage = this.StorageProvider;
-        var folders = await storage.OpenFolderPickerAsync(new FolderPickerOpenOptions
-        {
-            Title = "Select Job Applications Folder",
-            AllowMultiple = false
-        });
-
-        if (folders.Any())
-        {
-            var path = folders[0].Path.LocalPath;
-            if (DataContext is MainWindowViewModel vm)
-            {
-                vm.CurrentDataPath = path;
-                await vm.LoadJobsAsync();
-            }
-        }
     }
 }

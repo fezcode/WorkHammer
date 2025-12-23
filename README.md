@@ -64,5 +64,5 @@ Generates a folder containing the executable and its dependencies as separate fi
   ```
 
 ---
-**Author:** Fezcode (samil bulbul)  
+**Author:** Fezcode (A. Samil Bulbul)  
 **Homepage:** [https://fezcode.com](https://fezcode.com)
