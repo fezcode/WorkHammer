@@ -147,8 +147,8 @@
     <Grid RowDefinitions="Auto, *, Auto">
         
         <!-- Custom Title Bar -->
-        <Grid Grid.Row="0" Height="40" ColumnDefinitions="Auto,*" Background="Transparent" PointerPressed="OnTitleBarPointerPressed">
-             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0" Spacing="10" IsHitTestVisible="False">
+        <Grid Grid.Row="0" Height="40" Background="Transparent" PointerPressed="OnTitleBarPointerPressed" DoubleTapped="OnTitleBarDoubleTapped">
+             <StackPanel x:Name="TitleBarContent" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10" IsHitTestVisible="False">
                  <PathIcon Data="M18,2H6C4.9,2 4,2.9 4,4v4h16V4C20,2.9 19.1,2 18,2M18,6H6V4h12V6M13,8v14h-2V8h2z" 
                            Width="14" Height="14" Foreground="#AAAAAA"/>
                  <TextBlock Text="WORKHAMMER" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" 

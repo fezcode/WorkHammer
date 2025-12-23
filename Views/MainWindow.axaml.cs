@@ -1,8 +1,10 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Input;
 using Avalonia.Platform.Storage;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Avalonia.Threading;
@@ -95,6 +97,13 @@ public partial class MainWindow : Window
         {
             BeginMoveDrag(e);
         }
+    }
+
+    private void OnTitleBarDoubleTapped(object sender, TappedEventArgs e)
+    {
+        WindowState = WindowState == WindowState.Maximized 
+            ? WindowState.Normal 
+            : WindowState.Maximized;
     }
 
     private async Task<bool> ShowDeleteConfirmDialog(string companyName)
