@@ -45,6 +45,24 @@ A high-fidelity, professional job application tracker designed for developers. B
    ```
 3. Use the **Select Folder** icon in the sidebar to choose where your job JSON files are stored.
 
+### 📦 Publishing & Building
+
+#### Standalone Single-File (Recommended)
+Generates a single `WorkHammer.exe` that includes all dependencies and the .NET runtime.
+- **Script:** Run `build.bat`
+- **Manual Command:**
+  ```bash
+  dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=false -o ./publish_single
+  ```
+
+#### Folder Publish
+Generates a folder containing the executable and its dependencies as separate files.
+- **Script:** Run `publish_folder.bat`
+- **Manual Command:**
+  ```bash
+  dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=false -o ./publish
+  ```
+
 ---
 **Author:** Fezcode (samil bulbul)  
 **Homepage:** [https://fezcode.com](https://fezcode.com)
