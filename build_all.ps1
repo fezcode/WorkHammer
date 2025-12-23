@@ -29,11 +29,13 @@ foreach ($t in $targets) {
     $name = $t.Name
     $targetDir = "$outBase\$rid"
 
-    Write-Host "Building for $name ($rid)..." -ForegroundColor Cyan
-
-    # For macOS, we initially publish to a temp folder inside the target dir
-    $publishDir = if ($t.IsMac) { "$targetDir\temp" } else { $targetDir }
-
+        Write-Host "Building for $name ($rid)..." -ForegroundColor Cyan
+        
+        # Ensure target directory exists
+        if (!(Test-Path $targetDir)) { New-Item -ItemType Directory -Path $targetDir | Out-Null }
+    
+        # For macOS, we initially publish to a temp folder inside the target dir
+        $publishDir = if ($t.IsMac) { "$targetDir\temp" } else { $targetDir }
     # Standard publish command
     dotnet publish -c Release -r $rid `
         --self-contained true `
@@ -42,10 +44,10 @@ foreach ($t in $targets) {
         -p:PublishTrimmed=false `
         -p:DebugType=None `
         -p:DebugSymbols=false `
-        -o $publishDir | Out-Null
+        -o $publishDir
 
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "Error building for $name" -ForegroundColor Red
+        Write-Host "Error building for $name (Exit Code: $LASTEXITCODE)" -ForegroundColor Red
         exit $LASTEXITCODE
     }
 
@@ -107,6 +109,24 @@ foreach ($t in $targets) {
             Write-Host "  [WARN] Icon file not found in Assets. App will have default system icon." -ForegroundColor Yellow
         }
     }
+
+    # Compression Step
+    Write-Host "Compressing output for $name..." -ForegroundColor Cyan
+    $zipPath = "$outBase\$projectName-$rid.zip"
+    if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+    
+    # Compress-Archive has issues with some paths or in-use files, adding a small delay or retry isn't usually needed but good to know.
+    # We zip the *content* of the target dir so the user gets the file/app directly, or the folder itself?
+    # Standard practice: Zip the folder contents if it's a single file, or the .app bundle itself.
+    
+    if ($t.IsMac) {
+        # Zip the .app bundle directory
+        Compress-Archive -Path "$targetDir\$projectName.app" -DestinationPath $zipPath -Force
+    } else {
+        # Zip everything inside the target dir (exe + maybe config)
+        Compress-Archive -Path "$targetDir\*" -DestinationPath $zipPath -Force
+    }
+    Write-Host "  -> Created: $zipPath" -ForegroundColor Green
 }
 
 Write-Host ""

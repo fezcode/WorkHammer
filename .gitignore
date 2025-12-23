@@ -20,3 +20,4 @@ publish_single
 # OS specific
 .DS_Store
 thumbs.db
+publish_dist/
