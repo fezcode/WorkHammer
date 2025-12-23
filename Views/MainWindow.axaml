@@ -10,7 +10,7 @@
         x:Class="WorkHammer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Name="rootWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/wh-logo.ico"
         Title="WorkHammer"
         Width="{Binding WindowWidth, Mode=TwoWay}"
         Height="{Binding WindowHeight, Mode=TwoWay}"
