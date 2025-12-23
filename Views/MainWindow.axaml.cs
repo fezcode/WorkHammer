@@ -77,6 +77,12 @@ public partial class MainWindow : Window
 
     private async void ShowAboutDialog()
     {
+        var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        var version = assembly.GetName().Version?.ToString(3) ?? "0.0.0";
+        var authorAttribute = assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyCompanyAttribute), false)
+                                      .FirstOrDefault() as System.Reflection.AssemblyCompanyAttribute;
+        var author = authorAttribute?.Company ?? "Fezcode";
+
         var dialog = new ContentDialog
         {
             Title = "About WorkHammer",
@@ -85,9 +91,9 @@ public partial class MainWindow : Window
                 Spacing = 10,
                 Children =
                 {
-                    new TextBlock { Text = "WorkHammer v1.0", FontWeight = Avalonia.Media.FontWeight.Bold, FontSize = 18 },
+                    new TextBlock { Text = $"WorkHammer v{version}", FontWeight = Avalonia.Media.FontWeight.Bold, FontSize = 18 },
                     new TextBlock { Text = "A professional job application tracker for developers.", TextWrapping = Avalonia.Media.TextWrapping.Wrap },
-                    new TextBlock { Text = "Author: Fezcode (A. Şamil Bülbül)", Opacity = 0.8 },
+                    new TextBlock { Text = $"Author: {author}", Opacity = 0.8 },
                     new Button 
                     {
                         Content = "Homepage: https://fezcode.com", 
