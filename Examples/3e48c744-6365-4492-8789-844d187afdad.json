@@ -1,0 +1,50 @@
+{
+  "TechStack": [
+    "C4\u002B\u002B",
+    "BASH!",
+    "Spark!",
+    "FLASH!!!"
+  ],
+  "Stages": [
+    "Stage 1: The Liability Screen (15 Mins)",
+    "Stage 2: The \u0022Short Fuse\u0022 Technical Challenge (45 Mins)",
+    "Stage 3: Pair Programming... with a Detonator (60 Mins)",
+    "Stage 4: The Resilience Interview (Behavioral)"
+  ],
+  "Logs": [
+    {
+      "Date": "1940-01-01T00:00:00",
+      "Stage": "Stage 1: The Liability Screen (15 Mins)",
+      "Text": "You won\u0027t meet a person. You will meet a stack of legal documents.\r\n\r\nThe Task: Sign 400 pages indemnifying ACME Corp against \u0022accidental flattening,\u0022 \u0022gravity inversion,\u0022 and \u0022rapid unscheduled disassembly.\u0022\r\n\r\nPass Criteria: You sign without reading."
+    },
+    {
+      "Date": "1940-01-10T00:00:00",
+      "Stage": "Stage 2: The \u0022Short Fuse\u0022 Technical Challenge (45 Mins)",
+      "Text": "The Task: You must debug the timing mechanism. The documentation says it is a 10-second fuse.\r\n\r\nThe Bug: It is actually a 3-second fuse.\r\n\r\nThe Test: Can you identify the discrepancy and throw the device out the window before the stack trace (smoke) hits you in the face?"
+    },
+    {
+      "Date": "1940-01-20T00:00:00",
+      "Stage": "Stage 3: Pair Programming... with a Detonator (60 Mins)",
+      "Text": "The Task: You must synchronize the \u0022Rocket Skates\u0022 ignition with the \u0022Jet Pack\u0022 thrust.\r\n\r\nThe Twist: The Senior Tester is mute (holding up signs) because he lost his voice screaming during the last sprint. You must interpret his terrified frantic waving correctly to abort the launch."
+    },
+    {
+      "Date": "1940-01-21T00:00:00",
+      "Stage": "Stage 4: The Resilience Interview (Behavioral)",
+      "Text": "The Question: \u0022Tell us about a time you failed.\u0022\r\n\r\nThe Correct Answer: You stand up, pull a cord that drops a 1-ton weight on your head, flatten into a disc, and then pop back into 3D shape with a \u0027poink\u0027 sound.\r\n\r\nThe Feedback: \u0022Excellent recovery time. You\u0027re hired.\u0022"
+    }
+  ],
+  "Id": "3e48c744-6365-4492-8789-844d187afdad",
+  "Company": "Acme Corporation",
+  "Role": "Lead Product Beta Tester (Explosives Division)",
+  "Status": 2,
+  "AppliedDate": "2025-12-24T00:00:00+03:00",
+  "CreatedDate": "2025-12-24T01:50:11.3128274+03:00",
+  "UpdatedDate": "2025-12-24T01:58:52.6434547+03:00",
+  "Description": "The Vibe: High risk, high reward (if you survive).\r\n\r\nResponsibilities: Testing the fuse duration on the \u0022Little Giant Firecracker,\u0022 verifying the aerodynamics of the \u0022Rocket-Powered Roller Skates,\u0022 and ensuring the \u0022Tornado Kit\u0022 actually stops spinning.\r\n\r\nKey Requirement: High tolerance for scorch marks, ability to hold up a small umbrella while a boulder falls on you, and excellent health insurance.",
+  "Notes": "High Blast Tolerance, Rapid Recovery from Flattening...",
+  "Link": "https://www.acme.corp/careers/explosives/urgent/please-sign-waiver-first",
+  "Result": {
+    "Stage": "Stage 4",
+    "Reason": "Offer Recieved"
+  }
+}

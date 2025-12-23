@@ -1,0 +1,35 @@
+{
+  "TechStack": [
+    "Fart Gun (Prototype v3)",
+    "Freeze Ray",
+    "Anti-Gravity Serum",
+    "Goggles (Prescription)",
+    "Banana"
+  ],
+  "Stages": [
+    "1. The \u0022Papoy\u0022 Language Proficiency Exam",
+    "2. Durability Test (Being hit by a mallet)",
+    "3. Group Karaoke Session (YMCA)"
+  ],
+  "Logs": [
+    {
+      "Date": "2025-12-24T00:00:00+03:00",
+      "Stage": "Technical Screen",
+      "Text": "Met with Dr. Nefario. He asked me to test a \u0022Boogie Robot.\u0022 It danced too hard and exploded. Nefario said my blast resistance was \u0022adequate.\u0022"
+    }
+  ],
+  "Id": "1b014498-789c-46f3-89cc-b6627d8e54fd",
+  "Company": "Gru Industries",
+  "Role": "Senior Henchman (Banana Division)",
+  "Status": 1,
+  "AppliedDate": "2025-12-24T00:00:00+03:00",
+  "CreatedDate": "2025-12-24T02:02:39.2997555+03:00",
+  "UpdatedDate": "2025-12-24T02:04:07.6916392+03:00",
+  "Description": "General labor required for villainous plots. Duties include stealing world landmarks, assembling freeze rays without reading instructions, and laughing uncontrollably at the word \u0022bottom.\u0022 Must be willing to be mutated into a purple monster occasionally. Uniform (denim overalls) provided.",
+  "Notes": "Boss has a very pointy nose but seems like a dad figure. Benefits include free cloning if I accidentally explode during a mission.",
+  "Link": "http://www.gru-enterprises.evil/jobs/apply?ref=banana-papoy",
+  "Result": {
+    "Stage": "",
+    "Reason": ""
+  }
+}

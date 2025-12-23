@@ -1,0 +1,35 @@
+{
+  "TechStack": [
+    "Cattle Prod (High Voltage)",
+    "Tranquilizer Rifle",
+    "Flare Gun",
+    "Running Shoes (Nike)",
+    "Walkie-Talkie"
+  ],
+  "Stages": [
+    "1. The Cardio Stress Test (Must run 100m in \u003C10s)",
+    "2. The \u0022Clever Girl\u0022 Awareness Assessment",
+    "3. Liability Waiver Signing (4-hour session)"
+  ],
+  "Logs": [
+    {
+      "Date": "2025-12-24T00:00:00+03:00",
+      "Stage": "Initial Screen",
+      "Text": "Recruiter asked if I have any allergies to dinosaur dander or being eaten. I said no. They seemed relieved."
+    }
+  ],
+  "Id": "bad6efd8-f1d4-43af-834a-45372ee70717",
+  "Company": "InGen (International Genetic Technologies)",
+  "Role": "Lead Asset Containment Officer (Raptor Division)",
+  "Status": 0,
+  "AppliedDate": "2025-12-24T00:00:00+03:00",
+  "CreatedDate": "2025-12-24T01:59:03.2583637+03:00",
+  "UpdatedDate": "2025-12-24T02:02:00.1892402+03:00",
+  "Description": "Responsible for the maintenance of electric perimeter fencing (Sector 9). Duties include the daily feeding of \u0022Assets\u0022 (high-velocity carnivores), testing tension wires, and ensuring the backup generators do not fail during tropical storms. Must be willing to work night shifts in torrential rain.",
+  "Notes": "High turnover rate for this position. The last guy \u0022disappeared\u0022 into the long grass. Need to ask about health insurance premiums.",
+  "Link": "http://www.ingen.com/careers/isla-nublar/security/please-sign-NDA-before-reading",
+  "Result": {
+    "Stage": "",
+    "Reason": ""
+  }
+}

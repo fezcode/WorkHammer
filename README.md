@@ -47,6 +47,11 @@ A high-fidelity, professional job application tracker designed for developers. B
    ```
 3. Use the **Select Folder** icon in the sidebar to choose where your job JSON files are stored.
 
+### 📂 Example Workspace
+To get started quickly, you can use the `Examples` directory included in this repository. It contains a sample workspace with pre-populated job applications to demonstrate the sorting, filtering, and tagging features.
+
+![Example Workspace Screenshot](./Examples/Example-Screen.png)
+
 ### 📦 Publishing & Building
 
 #### 1. Multi-Platform Build (Recommended)

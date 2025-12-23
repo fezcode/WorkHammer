@@ -1,0 +1,35 @@
+{
+  "TechStack": [
+    "Hydro-Dynamic Spatula",
+    "Grill (Grease Trap v2)",
+    "Cash Register (Manual)",
+    "Boatmobile (for deliveries)",
+    "Pickles"
+  ],
+  "Stages": [
+    "1. The Spatula Flip Technique",
+    "2. Anchovy Crowd Control",
+    "3. Salary \u0022Negotiation\u0022 (Begging)"
+  ],
+  "Logs": [
+    {
+      "Date": "2025-12-24T00:00:00+03:00",
+      "Stage": "Final Interview",
+      "Text": "I asked about \u0022Dental Coverage.\u0022 Mr. Krabs turned purple, shouted \u0022Me Money!\u0022 and hyperventilated. Application immediately terminated."
+    }
+  ],
+  "Id": "e15ebf65-1015-405e-835c-a37961cb82ce",
+  "Company": "The Krusty Krab",
+  "Role": "Executive Fry Cook",
+  "Status": 3,
+  "AppliedDate": "2025-12-24T00:00:00+03:00",
+  "CreatedDate": "2025-12-24T02:04:56.0441666+03:00",
+  "UpdatedDate": "2025-12-24T02:06:52.0567732+03:00",
+  "Description": "High-pressure culinary environment. Responsibilities include managing the grill during the lunch rush (anchovies), defending the Secret Formula from Plankton, and ensuring Mr. Krabs makes a profit of at least 110%. Must provide own spatula.",
+  "Notes": "Dodged a bullet. The coworker next to me (Squidward) looked miserable and was playing a clarinet very poorly.",
+  "Link": "http://www.krustykrab.com/jobs/cheap-labor/apply-now",
+  "Result": {
+    "Stage": "Interview with Mr. Krabs",
+    "Reason": "Candidate requested a starting wage above $0.00/hr. Hiring Manager (Mr. Krabs) laughed until he cried, then kicked candidate out."
+  }
+}
