@@ -25,7 +25,7 @@
                 <TextBlock Text="APPLICATIONS" Classes="section-header" VerticalAlignment="Center"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="4">
                     <Button Command="{Binding AddJobCommand}" Classes="toolbar" ToolTip.Tip="New Application">
-                        <PathIcon Data="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" Width="16" Height="16" Foreground="#888888"/>
+                        <PathIcon Data="{StaticResource IconPlus}" Width="16" Height="16" Foreground="#888888"/>
                     </Button>
                     
                     <!-- Sort Button -->
@@ -59,14 +59,14 @@
                                 </MenuItem>
                             </MenuFlyout>
                         </Button.Flyout>
-                        <PathIcon Data="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z" Width="14" Height="14" Foreground="#888888"/>
+                        <PathIcon Data="{StaticResource IconSort}" Width="14" Height="14" Foreground="#888888"/>
                     </Button>
 
                     <Button Command="{Binding OpenExplorerCommand}" Classes="toolbar" ToolTip.Tip="Reveal in File Explorer">
-                        <PathIcon Data="M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0-5a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z" Width="14" Height="14" Foreground="#888888"/>
+                        <PathIcon Data="{StaticResource IconSearch}" Width="14" Height="14" Foreground="#888888"/>
                     </Button>
                     <Button Click="OnSelectFolderClicked" Classes="toolbar" ToolTip.Tip="Change Working Folder">
-                        <PathIcon Data="M20 18H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h6l2 2h8c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2zM4 6v10h16V8h-8.41l-2-2H4z" Width="14" Height="14" Foreground="#888888"/>
+                        <PathIcon Data="{StaticResource IconFolder}" Width="14" Height="14" Foreground="#888888"/>
                     </Button>
                 </StackPanel>
             </Grid>
