@@ -102,14 +102,23 @@
                         <Border Background="Transparent" HorizontalAlignment="Stretch" Padding="12,10">
                             <Border.ContextFlyout>
                                 <MenuFlyout>
-                                    <MenuItem Header="Edit" Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).EditCurrentCommand}">
-                                        <MenuItem.Icon><ui:SymbolIcon Symbol="Edit" x:CompileBindings="False"/></MenuItem.Icon>
+                                    <MenuItem Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).EditCurrentCommand}">
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <PathIcon Data="{StaticResource IconPencil}" Classes="menu-icon"/>
+                                                <TextBlock Text="Edit Application" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </MenuItem.Header>
                                     </MenuItem>
                                     <Separator/>
-                                    <MenuItem Header="Delete" 
-                                              Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteJobCommand}"
+                                    <MenuItem Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteJobCommand}"
                                               Classes="danger">
-                                        <MenuItem.Icon><ui:SymbolIcon Symbol="Delete" x:CompileBindings="False"/></MenuItem.Icon>
+                                        <MenuItem.Header>
+                                            <StackPanel Orientation="Horizontal">
+                                                <PathIcon Data="{StaticResource IconTrash}" Classes="menu-icon"/>
+                                                <TextBlock Text="Delete Application" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </MenuItem.Header>
                                     </MenuItem>
                                 </MenuFlyout>
                             </Border.ContextFlyout>
