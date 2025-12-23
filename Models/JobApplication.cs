@@ -16,11 +16,22 @@ public enum JobStatus
     Ghosted
 }
 
+public partial class JobResult : ObservableObject
+{
+    [ObservableProperty]
+    private string _stage = string.Empty;
+
+    [ObservableProperty]
+    private string _reason = string.Empty;
+}
+
 public partial class JobApplication : ObservableObject
 {
     public JobApplication()
     {
         TechStack.CollectionChanged += (s, e) => IsDirty = true;
+        Stages.CollectionChanged += (s, e) => IsDirty = true;
+        Result.PropertyChanged += (s, e) => IsDirty = true;
     }
 
     [ObservableProperty]
@@ -43,6 +54,9 @@ public partial class JobApplication : ObservableObject
     private DateTime? _appliedDate = DateTime.Today;
 
     [ObservableProperty]
+    private DateTime _createdDate = DateTime.Now;
+
+    [ObservableProperty]
     private DateTime? _updatedDate;
 
     [ObservableProperty]
@@ -56,11 +70,16 @@ public partial class JobApplication : ObservableObject
 
     public ObservableCollection<string> TechStack { get; set; } = new();
 
+    public ObservableCollection<string> Stages { get; set; } = new();
+
+    [ObservableProperty]
+    private JobResult _result = new();
+
     protected override void OnPropertyChanged(PropertyChangedEventArgs e)
     {
         base.OnPropertyChanged(e);
 
-        if (e.PropertyName != nameof(IsDirty) && e.PropertyName != nameof(TechStack))
+        if (e.PropertyName != nameof(IsDirty) && e.PropertyName != nameof(TechStack) && e.PropertyName != nameof(Stages) && e.PropertyName != nameof(Result))
         {
             IsDirty = true;
         }

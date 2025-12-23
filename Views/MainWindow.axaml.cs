@@ -31,6 +31,23 @@ public partial class MainWindow : Window
         };
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == WindowStateProperty)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                MainRoot.Margin = new Thickness(8);
+            }
+            else
+            {
+                MainRoot.Margin = new Thickness(0);
+            }
+        }
+    }
+
     protected override async void OnClosing(WindowClosingEventArgs e)
     {
         if (_isClosing)
@@ -42,6 +59,12 @@ public partial class MainWindow : Window
         if (DataContext is MainWindowViewModel vm)
         {
             e.Cancel = true;
+
+            // Save window size if not maximized
+            if (WindowState == WindowState.Normal)
+            {
+                await vm.SaveWindowSizeAsync(Bounds.Width, Bounds.Height);
+            }
 
             bool canClose = await vm.CanCloseAsync();
             if (canClose)
@@ -156,7 +179,6 @@ public partial class MainWindow : Window
     private async void OnSelectFolderClicked(object? sender, RoutedEventArgs e)
     {
         var storage = this.StorageProvider;
-        
         var folders = await storage.OpenFolderPickerAsync(new FolderPickerOpenOptions
         {
             Title = "Select Job Applications Folder",
