@@ -47,15 +47,17 @@ A high-fidelity, professional job application tracker designed for developers. B
 
 ### 📦 Publishing & Building
 
-#### Standalone Single-File (Recommended)
-Generates a single `WorkHammer.exe` that includes all dependencies and the .NET runtime.
-- **Script:** Run `./build.ps1`
-- **Manual Command:**
-  ```bash
-  dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=false -o ./publish_single
-  ```
+#### 1. Windows Standalone (Fastest)
+Generates a single `WorkHammer.exe` for Windows x64.
+- **Script:** Run `./build_windows.ps1`
+- **Output:** `./publish_single/WorkHammer.exe`
 
-#### Folder Publish
+#### 2. Cross-Platform Build (All OS)
+Generates standalone executables for **Windows**, **Linux**, **macOS (Apple Silicon)**, and **macOS (Intel)**.
+- **Script:** Run `./build_all.ps1`
+- **Output:** `./publish_dist/`
+
+#### 3. Folder Publish (Legacy)
 Generates a folder containing the executable and its dependencies as separate files.
 - **Script:** Run `./publish_folder.ps1`
 - **Manual Command:**
