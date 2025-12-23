@@ -213,7 +213,7 @@ public partial class MainWindowViewModel
     partial void OnIsAscendingChanged(bool value) => ApplyFilter();
 
     [RelayCommand]
-    private void SetSort(JobSortOption option)
+    private async Task SetSort(JobSortOption option)
     {
         if (CurrentSort == option) IsAscending = !IsAscending;
         else
@@ -227,6 +227,8 @@ public partial class MainWindowViewModel
         OnPropertyChanged(nameof(IsUpdateSortActive));
         OnPropertyChanged(nameof(IsCreatedSortActive));
         OnPropertyChanged(nameof(SortDirectionIcon));
+
+        await SaveSortSettingsAsync();
     }
 
     [RelayCommand]

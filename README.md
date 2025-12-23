@@ -49,7 +49,7 @@ A high-fidelity, professional job application tracker designed for developers. B
 
 #### Standalone Single-File (Recommended)
 Generates a single `WorkHammer.exe` that includes all dependencies and the .NET runtime.
-- **Script:** Run `build.bat`
+- **Script:** Run `./build.ps1`
 - **Manual Command:**
   ```bash
   dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:PublishTrimmed=false -o ./publish_single
@@ -57,7 +57,7 @@ Generates a single `WorkHammer.exe` that includes all dependencies and the .NET 
 
 #### Folder Publish
 Generates a folder containing the executable and its dependencies as separate files.
-- **Script:** Run `publish_folder.bat`
+- **Script:** Run `./publish_folder.ps1`
 - **Manual Command:**
   ```bash
   dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=false -o ./publish

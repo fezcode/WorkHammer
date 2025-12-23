@@ -5,7 +5,7 @@
              x:Class="WorkHammer.Views.Controls.SettingsOverlayView"
              x:DataType="vm:MainWindowViewModel">
     
-    <Border IsVisible="{Binding IsSettingsOpen}" Background="#E0000000" ZIndex="10">
+    <Border IsVisible="{Binding IsSettingsOpen}" Background="#FF1A1A1A" ZIndex="10">
         <Grid RowDefinitions="Auto, *">
             <Grid Grid.Row="0" Margin="40,40,40,20" ColumnDefinitions="*, Auto">
                 <TextBlock Text="SETTINGS" Classes="section-header" FontSize="24" Opacity="1"/>

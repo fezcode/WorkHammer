@@ -86,6 +86,48 @@
             <Setter Property="Foreground" Value="SkyBlue"/>
         </Style>
 
+        <!-- Simplified Context Menu Styling -->
+        <Style Selector="MenuFlyoutPresenter">
+            <Setter Property="Background" Value="#2B2B2B"/>
+            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="MinWidth" Value="180"/>
+        </Style>
+
+        <Style Selector="MenuItem">
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MinWidth" Value="180"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        
+        <!-- Icon sizing - BIGGER and moved right -->
+        <Style Selector="MenuItem ui|SymbolIcon">
+            <Setter Property="FontSize" Value="26"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Margin" Value="20,0,15,0"/>
+        </Style>
+
+        <!-- Standard Single Hover Effect on the ContentPresenter -->
+        <Style Selector="MenuItem /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        
+        <Style Selector="MenuItem:pointerover /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Background" Value="#25FFFFFF"/>
+        </Style>
+
+        <!-- Danger MenuItem Style -->
+        <Style Selector="MenuItem.danger">
+            <Setter Property="Foreground" Value="#FF4D4D"/>
+        </Style>
+        <Style Selector="MenuItem.danger:pointerover /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Background" Value="#25FF4D4D"/>
+        </Style>
+
         <!-- Typography -->
         <Style Selector="TextBlock.section-header">
             <Setter Property="FontSize" Value="11"/>
@@ -111,28 +153,6 @@
 
         <Style Selector="Label">
             <Setter Property="Foreground" Value="White"/>
-        </Style>
-
-        <!-- Menu / Flyout Styling -->
-        <Style Selector="MenuFlyoutPresenter">
-            <Setter Property="Background" Value="#202020"/>
-            <Setter Property="BorderBrush" Value="#40FFFFFF"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="4"/>
-            <Setter Property="Padding" Value="4"/>
-            <Setter Property="FontFamily" Value="Segoe UI Variable Display, Segoe UI, Inter, sans-serif"/>
-        </Style>
-
-        <Style Selector="MenuItem">
-            <Setter Property="CornerRadius" Value="4"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Padding" Value="0"/>
-        </Style>
-        <Style Selector="MenuItem /template/ ContentPresenter#PART_HeaderPresenter">
-            <Setter Property="Padding" Value="10,8"/>
-        </Style>
-        <Style Selector="MenuItem:pointerover /template/ ContentPresenter#PART_HeaderPresenter">
-            <Setter Property="Background" Value="#20FFFFFF"/>
         </Style>
 
         <!-- Status Bar Badge Style -->

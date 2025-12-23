@@ -56,6 +56,14 @@ public partial class MainWindowViewModel
         await _settingsService.SaveWindowSizeAsync(width, height);
     }
 
+    public async Task SaveSortSettingsAsync()
+    {
+        var settings = await _settingsService.LoadSettingsAsync();
+        settings.CurrentSort = CurrentSort.ToString();
+        settings.IsAscending = IsAscending;
+        await _settingsService.SaveSettingsAsync(settings);
+    }
+
     [RelayCommand]
     private async Task SetAsDefaultDirectory()
     {

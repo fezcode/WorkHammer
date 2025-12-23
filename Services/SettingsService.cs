@@ -11,6 +11,8 @@ public class AppSettings
     public string DataPath { get; set; } = string.Empty;
     public double WindowWidth { get; set; } = 1000;
     public double WindowHeight { get; set; } = 600;
+    public string CurrentSort { get; set; } = "LastUpdate";
+    public bool IsAscending { get; set; } = false;
 }
 
 public class SettingsService

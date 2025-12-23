@@ -84,6 +84,11 @@ public partial class MainWindowViewModel : ViewModelBase
         DefaultDataPath = settings.DataPath;
         WindowWidth = settings.WindowWidth;
         WindowHeight = settings.WindowHeight;
+        
+        if (Enum.TryParse<JobSortOption>(settings.CurrentSort, out var sort))
+            CurrentSort = sort;
+        
+        IsAscending = settings.IsAscending;
 
         if (!string.IsNullOrEmpty(CurrentDataPath) && !Directory.Exists(CurrentDataPath))
         {
