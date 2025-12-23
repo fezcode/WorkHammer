@@ -115,17 +115,35 @@ foreach ($t in $targets) {
     $zipPath = "$outBase\$projectName-$rid.zip"
     if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
     
-    # Compress-Archive has issues with some paths or in-use files, adding a small delay or retry isn't usually needed but good to know.
-    # We zip the *content* of the target dir so the user gets the file/app directly, or the folder itself?
-    # Standard practice: Zip the folder contents if it's a single file, or the .app bundle itself.
-    
-    if ($t.IsMac) {
-        # Zip the .app bundle directory
-        Compress-Archive -Path "$targetDir\$projectName.app" -DestinationPath $zipPath -Force
+    # Check for native zip command (preserves permissions/symlinks on macOS/Linux)
+    $hasZip = Get-Command "zip" -ErrorAction SilentlyContinue
+
+    if ($hasZip) {
+        $fullZipPath = Convert-Path "$outBase"
+        $fullZipPath = Join-Path $fullZipPath "$projectName-$rid.zip"
+        
+        # Use Push-Location to zip from the correct directory relative structure
+        Push-Location $targetDir
+        
+        if ($t.IsMac) {
+            # Zip the .app bundle (preserve symlinks with -y)
+            # -r: recursive, -y: store symlinks, -q: quiet
+            zip -r -y -q "$fullZipPath" "$projectName.app"
+        } else {
+            # Zip contents of the folder
+            zip -r -q "$fullZipPath" .
+        }
+        
+        Pop-Location
     } else {
-        # Zip everything inside the target dir (exe + maybe config)
-        Compress-Archive -Path "$targetDir\*" -DestinationPath $zipPath -Force
+        # Fallback for Windows or missing zip tool
+        if ($t.IsMac) {
+            Compress-Archive -Path "$targetDir\$projectName.app" -DestinationPath $zipPath -Force
+        } else {
+            Compress-Archive -Path "$targetDir\*" -DestinationPath $zipPath -Force
+        }
     }
+    
     Write-Host "  -> Created: $zipPath" -ForegroundColor Green
 }
 

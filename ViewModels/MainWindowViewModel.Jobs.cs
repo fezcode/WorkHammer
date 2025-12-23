@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Runtime.InteropServices;
 using WorkHammer.Models;
 
 namespace WorkHammer.ViewModels;
@@ -307,7 +308,19 @@ public partial class MainWindowViewModel
     [RelayCommand]
     private void OpenExplorer()
     {
-        if (!string.IsNullOrEmpty(CurrentDataPath) && Directory.Exists(CurrentDataPath))
+        if (string.IsNullOrEmpty(CurrentDataPath) || !Directory.Exists(CurrentDataPath)) return;
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
             System.Diagnostics.Process.Start("explorer", CurrentDataPath);
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            System.Diagnostics.Process.Start("open", CurrentDataPath);
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            System.Diagnostics.Process.Start("xdg-open", CurrentDataPath);
+        }
     }
 }
