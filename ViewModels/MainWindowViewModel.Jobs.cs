@@ -291,6 +291,18 @@ public partial class MainWindowViewModel
     [RelayCommand] private void ClearFilter() => StatusFilter = null;
 
     [RelayCommand]
+    private void OpenUrl(string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return;
+        try
+        {
+            if (!url.StartsWith("http")) url = "https://" + url;
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+        }
+        catch { }
+    }
+
+    [RelayCommand]
     private void OpenExplorer()
     {
         if (!string.IsNullOrEmpty(CurrentDataPath) && Directory.Exists(CurrentDataPath))

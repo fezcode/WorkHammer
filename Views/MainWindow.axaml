@@ -73,6 +73,19 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
 
+        <Style Selector="Button.toolbar-link">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Foreground" Value="SkyBlue"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style Selector="Button.toolbar-link:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+            <Setter Property="Foreground" Value="SkyBlue"/>
+        </Style>
+
         <!-- Typography -->
         <Style Selector="TextBlock.section-header">
             <Setter Property="FontSize" Value="11"/>

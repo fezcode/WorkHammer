@@ -3,6 +3,7 @@
              xmlns:vm="using:WorkHammer.ViewModels"
              xmlns:ui="clr-namespace:FluentAvalonia.UI.Controls;assembly=FluentAvalonia"
              xmlns:conv="using:WorkHammer.Views.Converters"
+             xmlns:views="using:WorkHammer.Views"
              x:Class="WorkHammer.Views.Controls.JobDetailView"
              x:DataType="vm:MainWindowViewModel">
 
@@ -34,10 +35,24 @@
                     <StackPanel Grid.Column="0" Spacing="8"><TextBlock Text="DATE APPLIED" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.AppliedDate, StringFormat='{}{0:D}'}" FontSize="16"/></StackPanel>
                     <StackPanel Grid.Column="1" Spacing="8"><TextBlock Text="DATE CREATED" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.CreatedDate, StringFormat='{}{0:D}'}" FontSize="16"/></StackPanel>
                     <StackPanel Grid.Column="2" Spacing="8"><TextBlock Text="LAST UPDATED" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.UpdatedDate, FallbackValue='Never'}" FontSize="16" Opacity="0.6"/></StackPanel>
-                    <StackPanel Grid.Column="3" Spacing="8"><TextBlock Text="JOB LINK" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.Link, FallbackValue='No Link'}" FontSize="16" Foreground="{DynamicResource SystemControlBackgroundAccentBrush}"/></StackPanel>
+                    <StackPanel Grid.Column="3" Spacing="8">
+                        <TextBlock Text="JOB LINK" Classes="section-header"/>
+                        <Button Content="Open Link" 
+                                Command="{Binding OpenUrlCommand}"
+                                CommandParameter="{Binding SelectedJob.Link}"
+                                Classes="toolbar-link"
+                                ToolTip.Tip="{Binding SelectedJob.Link}"
+                                IsVisible="{Binding SelectedJob.Link, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                FontSize="16"/>
+                        <TextBlock Text="No Link" IsVisible="{Binding SelectedJob.Link, Converter={x:Static StringConverters.IsNullOrEmpty}}" 
+                                 FontSize="16" Opacity="0.4"/>
+                    </StackPanel>
                 </Grid>
                 
-                <StackPanel Spacing="12"><TextBlock Text="DESCRIPTION" Classes="section-header"/><TextBlock Text="{Binding SelectedJob.Description}" FontSize="14" TextWrapping="Wrap" LineHeight="22" Opacity="0.9"/></StackPanel>
+                <StackPanel Spacing="12">
+                    <TextBlock Text="DESCRIPTION" Classes="section-header"/>
+                    <TextBlock views:Linker.Text="{Binding SelectedJob.Description}" FontSize="14" TextWrapping="Wrap" LineHeight="22" Opacity="0.9"/>
+                </StackPanel>
                 <StackPanel Spacing="12"><TextBlock Text="TECH STACK" Classes="section-header"/><ItemsControl ItemsSource="{Binding SelectedJob.TechStack}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel/></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate><Border Classes="tech-badge"><TextBlock Text="{Binding}" FontSize="12"/></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel>
                 
                 <StackPanel Spacing="12">
@@ -63,7 +78,7 @@
                                 <TextBlock Grid.Column="1" Text="{Binding SelectedJob.Result.Stage, FallbackValue='N/A'}" FontWeight="SemiBold"/>
                             </Grid>
                             <TextBlock Text="Reason / Feedback:" FontSize="12" Opacity="0.6"/>
-                            <TextBlock Text="{Binding SelectedJob.Result.Reason, FallbackValue='No feedback provided'}" TextWrapping="Wrap" Opacity="0.9"/>
+                            <TextBlock views:Linker.Text="{Binding SelectedJob.Result.Reason, FallbackValue='No feedback provided'}" TextWrapping="Wrap" Opacity="0.9"/>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -80,7 +95,7 @@
                                         <StackPanel Grid.Column="1" Margin="15,0,0,0">
                                             <TextBlock Text="{Binding Stage}" IsVisible="{Binding Stage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" 
                                                        FontSize="12" FontWeight="Bold" Foreground="SkyBlue" Margin="0,0,0,4"/>
-                                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap" FontSize="13" Opacity="0.9"/>
+                                            <TextBlock views:Linker.Text="{Binding Text}" TextWrapping="Wrap" FontSize="13" Opacity="0.9"/>
                                         </StackPanel>
                                     </Grid>
                                 </Border>
@@ -90,7 +105,12 @@
                     <TextBlock Text="No logs recorded yet." IsVisible="{Binding !SelectedJob.Logs.Count}" Opacity="0.3" FontSize="12" HorizontalAlignment="Center" Margin="0,10,0,0"/>
                 </StackPanel>
 
-                <StackPanel Spacing="12"><TextBlock Text="PERSONAL NOTES" Classes="section-header"/><Border Background="#10FFFFFF" CornerRadius="8" Padding="20"><TextBlock Text="{Binding SelectedJob.Notes}" FontSize="14" TextWrapping="Wrap" Opacity="0.8" FontStyle="Italic"/></Border></StackPanel>
+                <StackPanel Spacing="12">
+                    <TextBlock Text="PERSONAL NOTES" Classes="section-header"/>
+                    <Border Background="#10FFFFFF" CornerRadius="8" Padding="20">
+                        <TextBlock views:Linker.Text="{Binding SelectedJob.Notes}" FontSize="14" TextWrapping="Wrap" Opacity="0.8" FontStyle="Italic"/>
+                    </Border>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>
