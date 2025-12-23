@@ -82,6 +82,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private string _newTechTag = string.Empty;
     [ObservableProperty] private string _newStageName = string.Empty;
+    [ObservableProperty] private string _newLogText = string.Empty;
+    [ObservableProperty] private string _newLogStage = string.Empty;
 
             [ObservableProperty] private int _totalCount;
             [ObservableProperty] private int _appliedCount;
@@ -4692,7 +4694,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     
 
-                                [RelayCommand]
+                                                                [RelayCommand]
 
     
 
@@ -4708,7 +4710,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     
 
-                                private void RemoveStage(string stage)
+                    
 
     
 
@@ -4724,7 +4726,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     
 
-                                {
+                                
 
     
 
@@ -4740,7 +4742,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     
 
-                                    SelectedJob?.Stages.Remove(stage);
+                    
 
     
 
@@ -4756,7 +4758,903 @@ public partial class MainWindowViewModel : ViewModelBase
 
     
 
-                                }
+                                            private void RemoveStage(string stage)
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            {
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                SelectedJob?.Stages.Remove(stage);
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            }
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            [RelayCommand]
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            private void AddLog()
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            {
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                if (!string.IsNullOrWhiteSpace(NewLogText) && SelectedJob != null)
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                {
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                    SelectedJob.Logs.Add(new JobLog
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                    {
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                        Date = DateTime.Now,
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                        Stage = NewLogStage,
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                        Text = NewLogText.Trim()
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                    });
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                    NewLogText = string.Empty;
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                    NewLogStage = string.Empty;
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                }
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            }
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            [RelayCommand]
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            private void RemoveLog(JobLog log)
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            {
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                                SelectedJob?.Logs.Remove(log);
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                    
+
+    
+
+            
+
+    
+
+                
+
+    
+
+            
+
+    
+
+                                            }
 
     
 
@@ -5170,6 +6068,9 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (SelectedJob != null && SelectedJob.IsDirty && !string.IsNullOrEmpty(CurrentDataPath))
         {
+            // Explicitly set dirty to false because we are intentionally cancelling/discarding
+            SelectedJob.IsDirty = false;
+
             var originalJob = await _jobService.LoadJobAsync(CurrentDataPath, SelectedJob.Id);
             if (originalJob != null)
             {
@@ -5178,28 +6079,35 @@ public partial class MainWindowViewModel : ViewModelBase
                 if (index != -1)
                 {
                     _allJobs[index] = originalJob;
+                    _isRestoringSelection = true; // Prevent prompt logic
                     ApplyFilter();
                     SelectedJob = originalJob;
+                    _isRestoringSelection = false;
                 }
             }
             else
             {
                 _allJobs.Remove(SelectedJob);
+                _isRestoringSelection = true; // Prevent prompt logic
                 ApplyFilter();
                 SelectedJob = Jobs.FirstOrDefault();
+                _isRestoringSelection = false;
             }
         }
         IsEditing = false;
     }
 
+    private bool _isCheckingDirty;
+
     // Called when SelectedJob changes
     async partial void OnSelectedJobChanged(JobApplication? oldValue, JobApplication? newValue)
     {
-        if (_isRestoringSelection) return;
+        if (_isRestoringSelection || _isCheckingDirty) return;
 
         // Check if we need to save the OLD value
         if (oldValue != null && oldValue.IsDirty)
         {
+            _isCheckingDirty = true;
             _isRestoringSelection = true;
             var tempNewValue = newValue;
             SelectedJob = oldValue; // Stay on the current item while prompting
@@ -5211,9 +6119,15 @@ public partial class MainWindowViewModel : ViewModelBase
                 
                 if (result == ConfirmationResult.Cancel)
                 {
+                    _isCheckingDirty = false;
                     return; // Already restored to oldValue
                 }
-                else if (result == ConfirmationResult.Yes)
+                
+                // For Yes/No, we will eventually move to the new selection, 
+                // but we need to prevent ApplyFilter from triggering recursive calls
+                _isRestoringSelection = true;
+
+                if (result == ConfirmationResult.Yes)
                 {
                     if (!string.IsNullOrEmpty(CurrentDataPath))
                     {
@@ -5244,12 +6158,12 @@ public partial class MainWindowViewModel : ViewModelBase
                     }
                 }
                 
-                // If we got here, we can proceed to the new selection
-                _isRestoringSelection = true;
+                // Now proceed to the new selection
                 SelectedJob = tempNewValue;
                 IsEditing = false;
                 _isRestoringSelection = false;
             }
+            _isCheckingDirty = false;
         }
         else
         {
@@ -5297,6 +6211,7 @@ public partial class MainWindowViewModel : ViewModelBase
         _allJobs.Insert(0, newJob);
         ApplyFilter(); 
         SelectedJob = newJob;
+        IsEditing = true;
     }
 
     [RelayCommand]
