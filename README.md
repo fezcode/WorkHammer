@@ -52,6 +52,33 @@ To get started quickly, you can use the `Examples` directory included in this re
 
 ![Example Workspace Screenshot](./Examples/Example-Screen.png)
 
+### ⚙️ Configuration & Storage
+WorkHammer stores its configuration in a hidden folder within your user profile to ensure your preferences persist across updates.
+
+- **Location:** `~/wh/settings.json` 
+  - *Windows:* `C:\Users\<Name>\wh\settings.json`
+  - *macOS/Linux:* `/Users/<Name>/wh/settings.json`
+
+#### Settings Structure
+The `settings.json` file uses a simple, human-readable format:
+
+```json
+{
+  "DataPath": "C:\\Users\\Name\\wh\\jobs",
+  "IsTransparencyEnabled": true,
+  "WindowWidth": 1000,
+  "WindowHeight": 600,
+  "CurrentSort": "LastUpdate",
+  "IsAscending": false
+}
+```
+
+#### Field Details:
+- **`DataPath`**: The primary workspace directory where your job applications are stored. You can change this at any time using the **Select Folder** icon in the sidebar or by manually updating this path in the `settings.json` file.
+- **`IsTransparencyEnabled`**: Enables or disables the modern **Mica/Acrylic** background effects. Disable this if you prefer a solid background or encounter performance issues.
+- **`WindowWidth` & `WindowHeight`**: Remembers your preferred application size so it opens exactly where you left off.
+- **`CurrentSort` & `IsAscending`**: Automatically persists your last sorting preference (e.g., sorting by "Last Update" in descending order) so your pipeline is always organized how you like it.
+
 ### 📦 Publishing & Building
 
 #### 1. Multi-Platform Build (Recommended)
